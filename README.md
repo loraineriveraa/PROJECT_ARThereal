@@ -1,4 +1,5 @@
 # PROJECT_ARThereal
 E-commerce website for art/creative related products.
 
-(Only for School Purposes.)
+
+(Still a Work In Progress.) + (Only for School Purposes.)
