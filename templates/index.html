@@ -1,0 +1,72 @@
+
+   {% extends "base.html" %}
+   {% block content %}
+        <section id="hero">
+            <h4> || art from the void. ||</h4>
+            <h1>ARThereal</h1>
+            <p>"An ethereal fragment of a forgotten dream."</p>
+
+           <a href="{{ url_for('shop') }}"><button>Shop Now</button></a>
+        </section>
+
+        <section id="features" class="section-p1">
+            <h1>What we Offer</h1>
+            <div class="feature-box">
+                <img src="{{ url_for('static', filename='uploads/images/ArtCommissions.png') }}" alt="Commissions">
+                <h6>Commissions</h6>
+            </div>
+            <div class="feature-box">
+                <img src="{{ url_for('static', filename='uploads/images/ArtPrints.png') }}" alt="Posters">
+                <h6>Posters</h6>
+            </div>
+            <div class="feature-box">
+                <img src="{{ url_for('static', filename='uploads/images/Paintings.png') }}" alt="Paintings">
+                <h6>Paintings</h6>
+            </div>
+            <div class="feature-box">
+                <img src="{{ url_for('static', filename='uploads/images/Stickers.png') }}" alt="Stickers">
+                <h6>Stickers</h6>
+            </div>
+            <div class="feature-box">
+                <img src="{{ url_for('static', filename='uploads/images/Keychains.png') }}" alt="Keychains">
+                <h6>Keychains</h6>
+            </div><div class="feature-box">
+                <img src="{{ url_for('static', filename='uploads/images/Pins.png') }}" alt="Pins">
+                <h6>Pins</h6>
+            </div>
+            
+        </section>
+
+
+        <section id="product1" class="section-p1">
+            <h2>Featured Products</h2>
+            <p>Romantic Goth Collection.</p>
+
+            <div class="pro-container">
+                {% for product in art_pieces %}
+                    <div class="pro">
+                        <img src="{{ url_for('static', filename='uploads/images/Poster01.png') }}" alt="{{ product.title }}">
+                        
+                        <a href="{{ url_for('cart') }}" class="cart-btn">
+                            <i class="fa-solid fa-cart-shopping"></i></a>
+                        </a>
+                         <div class="des">
+                            <span>{{ product.category }}</span>
+                            <h5>{{ product.title }}</h5>
+                            <div class="star">
+                                <i class="fa-solid fa-star"></i>
+                                <i class="fa-solid fa-star"></i>
+                                <i class="fa-solid fa-star"></i>
+                                <i class="fa-solid fa-star"></i>
+                                <i class="fa-solid fa-star"></i>
+                            </div>
+                            <h4>${{ product.price }}</h4>
+                        </div>
+                    </div>
+                {% endfor %} </div>
+        </section>
+    {% endblock %}
+
+        <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+    </body>
+</html>
