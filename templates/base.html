@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}ARThereal{% endblock %}</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="icon" href="{{ url_for('static', filename='uploads/images/ARThereal_Icon.svg') }}">
+</head>
+
+<body>
+    <section id="header">
+        <a href="{{ url_for('index') }}">
+            <img src="{{ url_for('static', filename='uploads/images/ARThereal_Logo.png') }}" class="logo" alt="ARThereal Logo" width="200px" height="65px">
+        </a>
+        
+        <div>
+            <ul id="navbar">
+                <li><a href="{{ url_for('index') }}" class="{{ 'active' if request.path == url_for('index') else '' }}">Home</a></li>
+                <li><a href="{{ url_for('shop') }}" class="{{ 'active' if request.path == url_for('shop') else '' }}">Shop</a></li>
+                <li><a href="{{ url_for('gallery') }}" class="{{ 'active' if request.path == url_for('gallery') else '' }}">Gallery</a></li>
+                <li><a href="{{ url_for('about') }}" class="{{ 'active' if request.path == url_for('about') else '' }}">About</a></li>
+                <li><a href="{{ url_for('contact') }}" class="{{ 'active' if request.path == url_for('contact') else '' }}">Contact</a></li>
+
+                <li>
+                    <a href="{{ url_for('cart') }}" class="{{ 'active' if request.path == url_for('cart') else '' }}">
+                        <i class="fa-solid fa-cart-shopping"></i>
+                    </a>
+                </li>
+
+                <li class="dropdown">
+                    <a href="javascript:void(0)" class="{{ 'active' if request.path in [url_for('account'), url_for('login'), url_for('register')] else '' }}">
+                        <i class="fa-solid fa-user"></i>
+                        {% if session.logged_in %}
+                            <span class="user-dot"></span>
+                        {% endif %}
+                    </a>
+                    <div class="dropdown-content">
+                        {% if session.logged_in %}
+                            <p class="welcome-text">User: {{ session.username }}</p>
+                            <hr>
+                            
+                            {% if session.role == 'admin' %}
+                                <a href="{{ url_for('admin_dashboard') }}"><i class="fa-solid fa-gauge-high"></i> Admin Panel</a>
+                            {% elif session.role == 'artist' %}
+                                <a href="{{ url_for('artist_dashboard') }}"><i class="fa-solid fa-palette"></i> Artist Panel</a>
+                            {% endif %}
+
+                            <a href="{{ url_for('account') }}"><i class="fa-solid fa-circle-user"></i> My Account</a>
+                            <hr>
+                            <a href="{{ url_for('logout') }}" class="logout-link">
+                                <i class="fa-solid fa-sign-out-alt"></i> Logout
+                            </a>
+                        {% else %}
+                            <a href="{{ url_for('login') }}"><i class="fa-solid fa-sign-in-alt"></i> Login</a>
+                            <a href="{{ url_for('register') }}"><i class="fa-solid fa-user-plus"></i> Register</a>
+                        {% endif %}
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </section>
+
+    {% with messages = get_flashed_messages() %}
+        {% if messages %}
+            <div id="flash-container">
+                {% for message in messages %}
+                    <div class="flash-popup">
+                        <div class="flash-content">
+                            <i class="fa-solid fa-ghost"></i> 
+                            <p>{{ message }}</p>
+                        </div>
+                        <span class="close-btn" onclick="this.parentElement.remove();">&times;</span>
+                    </div>
+                {% endfor %}
+            </div>
+        {% endif %}
+    {% endwith %}
+
+    <main>
+        {% block content %}
+        {% endblock %}
+    </main>
+
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+</body>
+
+</html>
